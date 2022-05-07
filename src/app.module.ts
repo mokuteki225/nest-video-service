@@ -12,12 +12,14 @@ import { DatabaseModule } from './database/database.module';
       driver: ApolloDriver,
       autoSchemaFile: path.join(process.cwd(), 'graphql/schema.gql'),
     }),
-    DatabaseModule.forRoot({
-      user: 'postgres',
-      database: 'postgres',
-      password: 'pass123',
-      port: 5432,
-      host: 'localhost',
+    DatabaseModule.forRootAsync({
+      useFactory: () => ({
+        user: 'postgres',
+        database: 'postgres',
+        password: 'pass123',
+        port: 5432,
+        host: 'localhost',
+      }),
     }),
   ],
 })
