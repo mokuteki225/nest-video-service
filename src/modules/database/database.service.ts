@@ -16,8 +16,12 @@ export class DatabaseService implements OnApplicationShutdown {
     this.pool = new Pool(options);
   }
 
-  async query(query: string) {
-    return this.pool.query(query);
+  async query<T>(query: string): Promise<T[]> {
+    const result = await this.pool.query<T>(query);
+
+    const { rows } = result;
+
+    return rows;
   }
 
   async onApplicationShutdown() {
