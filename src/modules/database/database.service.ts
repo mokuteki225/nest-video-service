@@ -16,15 +16,17 @@ export class DatabaseService implements OnApplicationShutdown {
     this.pool = new Pool(options);
   }
 
-  async query<T>(query: string): Promise<T[]> {
-    const result = await this.pool.query<T>(query);
-
-    const { rows } = result;
+  public async query<T>(query: string, values?: any[]): Promise<T[]> {
+    const { rows } = await this.pool.query<T>(query, values);
 
     return rows;
   }
 
-  async onApplicationShutdown() {
+  public async camelCaseToUnderscore() {}
+
+  public async underscoreToCamelCase() {}
+
+  public async onApplicationShutdown() {
     await this.pool.end();
   }
 }
