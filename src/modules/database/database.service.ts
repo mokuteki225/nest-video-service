@@ -22,9 +22,23 @@ export class DatabaseService implements OnApplicationShutdown {
     return rows;
   }
 
-  public async camelCaseToUnderscore() {}
+  public fieldsToParsedQueryWithValues(obj: any) {
+    const fields = [];
+    const values = [];
 
-  public async underscoreToCamelCase() {}
+    const keys = Object.keys(obj);
+
+    for (let i = 1; i <= keys.length; i++) {
+      const key = keys[i];
+
+      fields.push(`${key} = $${i}`);
+      values.push(obj[key]);
+    }
+
+    const parsedFields = fields.join(', ');
+
+    return { fields: parsedFields, values };
+  }
 
   public async onApplicationShutdown() {
     await this.pool.end();
