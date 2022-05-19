@@ -1,1 +1,2 @@
 export const DATABASE_OPTIONS = Symbol('DATABASE_OPTIONS');
+export const DATABASE_FEATURE = 'DATABASE_FEATURE';

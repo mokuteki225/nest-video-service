@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
-import { SelectParams } from './interface/select-params.interface';
+import { SelectParams } from '../interface/select-params.interface';
 
 import { DatabaseService } from './database.service';
 
 @Injectable()
 export class BaseRepository<T> {
-  private readonly tableName: string;
-
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(
+    private readonly table: string,
+    private readonly databaseService: DatabaseService,
+  ) {}
 
   public async selectAll(params: SelectParams<T>) {
     const { limit = 10, offset = 0, where } = params;
@@ -20,7 +21,7 @@ export class BaseRepository<T> {
 
     const query =
       'SELECT * FROM' +
-      this.tableName +
+      this.table +
       queryWhere +
       'LIMIT' +
       limit +

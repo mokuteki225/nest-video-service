@@ -2,9 +2,9 @@ import { Inject, Injectable, OnApplicationShutdown } from '@nestjs/common';
 
 import { Pool } from 'pg';
 
-import { DATABASE_OPTIONS } from './database.constants';
+import { DATABASE_OPTIONS } from '../database.constants';
 
-import { DatabaseOptions } from './interface/database-options.interface';
+import { DatabaseOptions } from '../interface/database-options.interface';
 
 @Injectable()
 export class DatabaseService implements OnApplicationShutdown {
