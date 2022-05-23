@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
+import { QueryDivider } from '../enums/query-divider.enum';
 import { SelectParams } from '../interface/select-params.interface';
 
 import { DatabaseService } from './database.service';
@@ -15,17 +16,20 @@ export class BaseRepository<T> {
     const { limit = 10, offset = 0, where } = params;
 
     const { fields: parsedWhere, values } =
-      this.databaseService.fieldsToParsedQueryWithValues(where);
+      this.databaseService.fieldsToParsedQueryWithValues(
+        where,
+        QueryDivider.AND,
+      );
 
-    const queryWhere = where ? 'WHERE ' + parsedWhere : '';
+    const queryWhere = where ? ' WHERE ' + parsedWhere : '';
 
     const query =
-      'SELECT * FROM' +
+      'SELECT * FROM ' +
       this.table +
       queryWhere +
-      'LIMIT' +
+      ' LIMIT ' +
       limit +
-      'OFFSET' +
+      ' OFFSET ' +
       offset;
 
     return this.databaseService.query<T>(query, values);

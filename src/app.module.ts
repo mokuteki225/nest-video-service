@@ -7,6 +7,8 @@ import * as path from 'path';
 import { DatabaseModule } from './modules/database/database.module';
 import { UserModule } from './modules/user/user.module';
 
+import { UserController } from './modules/user/user.controller';
+
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
