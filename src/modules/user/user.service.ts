@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { SelectParams } from '../database/interface/select-params.interface';
+import { CreateUserDto } from './dto/create-user.dto';
 
 import { User } from './models/user.model';
 
@@ -17,5 +18,9 @@ export class UserService {
 
   async findAll(params: SelectParams<User>) {
     return this.userRepository.selectAll(params);
+  }
+
+  async createOne(data: CreateUserDto) {
+    return this.userRepository.insertOne<CreateUserDto>(data, {});
   }
 }

@@ -8,16 +8,4 @@ import { UserService } from './user.service';
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @Get('/')
-  findAll() {
-    const params = {
-      where: {
-        name: 'Josh',
-        id: 1,
-      },
-    };
-
-    return this.userService.findAll(params);
-  }
 }

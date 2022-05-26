@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { QueryDivider } from '../enums/query-divider.enum';
 import { SelectParams } from '../interface/select-params.interface';
+import { InsertParams } from '../interface/insert-params.interface';
 
 import { DatabaseService } from './database.service';
 
@@ -15,11 +16,10 @@ export class BaseRepository<T> {
   public async selectAll(params: SelectParams<T>) {
     const { limit = 10, offset = 0, where } = params;
 
-    const { fields: parsedWhere, values } =
-      this.databaseService.fieldsToParsedQueryWithValues(
-        where,
-        QueryDivider.AND,
-      );
+    const { fields: parsedWhere, variables } = this.databaseService.parseFields(
+      where,
+      QueryDivider.AND,
+    );
 
     const queryWhere = where ? ' WHERE ' + parsedWhere : '';
 
@@ -32,6 +32,22 @@ export class BaseRepository<T> {
       ' OFFSET ' +
       offset;
 
-    return this.databaseService.query<T>(query, values);
+    return this.databaseService.query<T>(query, variables);
+  }
+
+  public async insertOne<Q>(data: Q, params: InsertParams): Promise<T[]> {
+    const { fields, values, variables } =
+      this.databaseService.parseInsertParams(data, params);
+
+    const query =
+      'INSERT INTO ' +
+      this.table +
+      ' (' +
+      fields +
+      ') VALUES (' +
+      values +
+      ') RETURNING *';
+
+    return this.databaseService.query<T>(query, variables);
   }
 }
