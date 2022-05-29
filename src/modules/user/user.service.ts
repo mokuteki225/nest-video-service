@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { SelectParams } from '../database/interface/select-params.interface';
+import { SelectParams } from '../database/interface/repository/select-params.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 
 import { User } from './models/user.model';

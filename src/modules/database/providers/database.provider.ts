@@ -1,8 +1,8 @@
 import { Provider } from '@nestjs/common';
 
-import { DATABASE_FEATURE } from '../database.constants';
+import { DATABASE_FEATURE } from '../constants/database.constants';
 
-import { DatabaseFeature } from '../interface/database-feature.interface';
+import { DatabaseFeature } from '../interface/database/database-feature.interface';
 
 import { BaseRepository } from './base.repository';
 

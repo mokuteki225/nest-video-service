@@ -8,4 +8,13 @@ import { UserService } from './user.service';
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Get('/')
+  findAll() {
+    const params = {
+      name: 'Josh',
+    };
+
+    return this.userService.createOne(params);
+  }
 }

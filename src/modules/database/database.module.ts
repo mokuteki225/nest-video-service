@@ -1,10 +1,10 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 
-import { DATABASE_OPTIONS } from './database.constants';
+import { DATABASE_OPTIONS } from './constants/database.constants';
 
-import { DatabaseOptions } from './interface/database-options.interface';
-import { DatabaseFeature } from './interface/database-feature.interface';
-import { DatabaseModuleAsyncOptions } from './interface/database-module-async-options.interface';
+import { DatabaseOptions } from './interface/database/database-options.interface';
+import { DatabaseFeature } from './interface/database/database-feature.interface';
+import { DatabaseModuleAsyncOptions } from './interface/database/database-module-async-options.interface';
 
 import { createDatabaseProviders } from './providers/database.provider';
 
