@@ -1,1 +1,4 @@
-export interface UpdateParams {}
+export interface UpdateParams<T> {
+  where: Partial<T>;
+  returning: boolean;
+}
