@@ -1,6 +1,6 @@
-import { Where } from './where.interface';
+import { PartialEntity } from './partial-entity.interface';
 
-export interface UpdateParams<T> {
-  where: Where<T>;
-  returning: boolean;
+export interface UpdateParams<Entity> {
+  where: PartialEntity<Entity>;
+  returning?: boolean;
 }

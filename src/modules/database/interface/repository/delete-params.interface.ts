@@ -1,5 +1,5 @@
-import { Where } from './where.interface';
+import { PartialEntity } from './partial-entity.interface';
 
-export interface DeleteParams<T> {
-  where: Where<T>;
+export interface DeleteParams<Entity> {
+  where: PartialEntity<Entity>;
 }

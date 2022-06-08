@@ -1,7 +1,7 @@
-import { Where } from './where.interface';
+import { PartialEntity } from './partial-entity.interface';
 
-export interface SelectParams<T> {
+export interface SelectParams<Entity> {
   limit?: number;
   offset?: number;
-  where?: Where<T>;
+  where?: PartialEntity<Entity>;
 }

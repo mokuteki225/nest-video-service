@@ -21,6 +21,6 @@ export class UserService {
   }
 
   async createOne(data: CreateUserDto) {
-    return this.userRepository.insertOne<CreateUserDto>(data, {});
+    return this.userRepository.insertOne(data);
   }
 }
