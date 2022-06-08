@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { QueryDivider } from '../enums/query-divider.enum';
 
+import { Where } from '../interface/repository/where.interface';
 import { SelectParams } from '../interface/repository/select-params.interface';
 import { InsertParams } from '../interface/repository/insert-params.interface';
 import { UpdateParams } from '../interface/repository/update-params.interface';
@@ -77,7 +78,7 @@ export class BaseRepository<T> {
     return result;
   }
 
-  private buildInsertParams(data: any, params: InsertParams) {
+  private buildInsertParams(data: object, params: InsertParams) {
     const fields = [];
     const values = [];
     const variables = [];
@@ -100,7 +101,7 @@ export class BaseRepository<T> {
     return result;
   }
 
-  private buildUpdateParams(data: any, params: UpdateParams<T>) {
+  private buildUpdateParams(data: object, params: UpdateParams<T>) {
     const { where, returning } = params;
 
     const { builtFields, variables } = this.buildFields(data);
@@ -157,7 +158,7 @@ export class BaseRepository<T> {
    *
    *  Returns formatted string and array of variables data[key]
    */
-  private buildWhere(where: Partial<T>, order = 0) {
+  private buildWhere(where: Where<T>, order = 0) {
     const fields = [];
     const variables = [];
 

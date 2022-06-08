@@ -1,3 +1,5 @@
+import { Where } from './where.interface';
+
 export interface DeleteParams<T> {
-  where: Partial<T>;
+  where: Where<T>;
 }
