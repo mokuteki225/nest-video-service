@@ -1,56 +1,34 @@
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { DATABASE_OPTIONS } from './constants/database.constants';
+import { Pool } from 'pg';
 
-import { DatabaseOptions } from './interface/database/database-options.interface';
-import { DatabaseFeature } from './interface/database/database-feature.interface';
-import { DatabaseModuleAsyncOptions } from './interface/database/database-module-async-options.interface';
+import { POSTGRES_POOL } from './constansts/database.constant';
 
-import { createDatabaseProviders } from './providers/database.provider';
+import { PostgresOptions } from './interfaces/postgres-options.interface';
 
-import { DatabaseService } from './providers/database.service';
+import { DatabaseService } from './database.service';
 
-@Global()
-@Module({})
-export class DatabaseModule {
-  public static forRoot(options: DatabaseOptions): DynamicModule {
-    return {
-      module: DatabaseModule,
-      providers: [
-        {
-          provide: DATABASE_OPTIONS,
-          useValue: options,
-        },
-        DatabaseService,
-      ],
-      exports: [DatabaseService],
-    };
-  }
+@Module({
+  imports: [ConfigModule],
+  providers: [
+    {
+      provide: POSTGRES_POOL,
+      useFactory: (config: ConfigService): Pool => {
+        const options: PostgresOptions = {
+          user: config.get<string>('POSTGRES_USER'),
+          database: config.get<string>('POSTGRES_DB'),
+          password: config.get<string>('POSTGRES_PASSWORD'),
+          port: config.get<number>('POSTGRES_PORT'),
+          host: config.get<string>('POSTGRES_HOST'),
+        };
 
-  public static forRootAsync(
-    options: DatabaseModuleAsyncOptions,
-  ): DynamicModule {
-    return {
-      module: DatabaseModule,
-      providers: [
-        {
-          provide: DATABASE_OPTIONS,
-          useFactory: options.useFactory,
-          inject: options.inject || [],
-        },
-        DatabaseService,
-      ],
-      exports: [DatabaseService],
-    };
-  }
-
-  public static forFeature(feature: DatabaseFeature): DynamicModule {
-    const providers = createDatabaseProviders(feature);
-
-    return {
-      module: DatabaseModule,
-      providers: [...providers],
-      exports: [...providers],
-    };
-  }
-}
+        return new Pool(options);
+      },
+      inject: [ConfigService],
+    },
+    DatabaseService,
+  ],
+  exports: [DatabaseService],
+})
+export class DatabaseModule {}

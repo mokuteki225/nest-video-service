@@ -1,20 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 
 import { UserService } from './user.service';
 
-/**
- * Temp controller which is being used for testing purposes
- */
-@Controller()
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @Get('/')
-  findAll() {
-    const params = {
-      name: 'Josh',
-    };
-
-    return this.userService.createOne(params);
-  }
 }

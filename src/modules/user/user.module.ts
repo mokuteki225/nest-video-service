@@ -7,7 +7,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
 @Module({
-  imports: [DatabaseModule.forFeature({ table: 'users' })],
+  imports: [DatabaseModule],
   providers: [UserService],
   controllers: [UserController],
   exports: [UserService],

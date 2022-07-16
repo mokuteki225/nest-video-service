@@ -1,4 +1,4 @@
-export interface DatabaseOptions {
+export interface PostgresOptions {
   user: string;
   database: string;
   password: string;
